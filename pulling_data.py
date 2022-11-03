@@ -302,19 +302,7 @@ top_100_gamer_username = ['Ninja',
                          'StableRonaldo']
 
 
-# create URL to extract the id's
-request_username_string = '&login='
-for i in top_100_gamer_username:
-    request_username_string = request_username_string + str(i) + '&login='
-
-URL_to_get_user_ids = "Ninja&login=auronplay&login=Rubius&login=ibai&login=xQc&login=Tfue&login=shroud&login=TheGrefg&login=juansguarnizo&login=pokimane&login=sodapoppin&login=Heelmike&login=Myth&login=tommyinnit&login=TimTheTatman&login=AdinRoss&login=NICKMERCS&login=Riot Games&login=SypherPK&login=Dream&login=summit1g&login=Amouranth&login=alanzoka&login=ElMariana&login=ElSpreen&login=ESL_CSGO&login=Clix&login=elded&login=Fortnite&login=Mongraal&login=AriGameplays&login=Quackity&login=Bugha&login=loltyler1&login=Tubbo&login=GeorgeNotFound&login=MontanaBlack88&login=Dakotaz&login=WilburSoot&login=moistcr1tikal&login=Robleis&login=DrLupo&login=Fresh&login=RanbooLive&login=NickEh30&login=DaequanWoco&login=Philza&login=SLAKUN10&login=Sykkuno&login=Squeezie&login=benjyfishy&login=Faker&login=RocketLeague&login=Gotaga&login=NOBRU&login=Gaules&login=Symfuhny&login=coscu&login=Castro_1021&login=Elraenn&login=loud_coringa&login=karljacobs&login=VALORANT&login=Fernanfloo&login=s1mple&login=Asmongold&login=buster&login=Alexby11&login=gabelulz&login=Trymacs&login=MissaSinfonia&login=IamCristinini&login=TenZ&login=ludwig&login=Syndicate&login=x2Twins&login=QuackityToo&login=Sapnap&login=casimito&login=elxokas&login=biyin_&login=LOLITOFDEZ&login=LIRIK&login=Aydan&login=Jelty&login=Loserfruit&login=cloakzy&login=jacksepticeye&login=aceu&login=wtcN&login=Carreraaa&login=MrSavage&login=Staryuuki&login=DisguisedToast&login=Nightblue3&login=KaiCenat&login=Nihachu&login=EASPORTSFIFA&login=Anomaly&login=StableRonaldo"
-
-
-
-get_user_ids = get_games_details_with_name("Ninja&login=auronplay")
-
-
-
+# fetching the streamers details
 import time
 user_ids_and_names = []
 for i in top_100_gamer_username:
@@ -361,6 +349,12 @@ for i in top_100_gamer_username:
 
 # create pandas dataframe of streamers details
 streamers_details = pd.DataFrame(user_ids_and_names, columns = ['id','login','display_name','type','broadcaster_type','description','view_count'])
+
+# saving the streamers data
+streamers_details.to_csv("Data/streamer_details.csv", index=False)
+
+# importing the streamers data
+data_streamers = pd.read_csv('Data/streamer_details.csv')
 
 
 
