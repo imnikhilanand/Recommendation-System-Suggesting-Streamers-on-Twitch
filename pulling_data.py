@@ -10,7 +10,7 @@ Created on Sat Oct 22 13:52:59 2022
 
 
 # updated client id and secret
-client_id=5hw8leitbdrn45ull85cfolul3s9qo&client_secret=nw0uzgmyi1rhs7ydd718dytbeu5uqg&grant_type=client_credentials
+client_id=5hw8leitbdrn45ull85cfolul3s9qo&client_secret=7t75m570gfns8n17ea7p99doh3ayjv&grant_type=client_credentials
 
 https://id.twitch.tv/oauth2/authorize
     ?response_type=code
@@ -19,18 +19,22 @@ https://id.twitch.tv/oauth2/authorize
     &scope=channel%3Amanage%3Apolls+channel%3Aread%3Apolls
     &state=c3ab8aa609ea11e793ae92361f002671
 
-#response ---- ! IMPORTANT ! -----
+# response ---- ! IMPORTANT ! -----
 http://localhost/?
 code=orvf6o7ju4lzkvxvpxck011kzemfhl
 &scope=channel%3Amanage%3Apolls+channel%3Aread%3Apolls
 &state=c3ab8aa609ea11e793ae92361f002671
 #############################################################
 
+# send this ->
 
+# https://id.twitch.tv/oauth2/token?client_id=5hw8leitbdrn45ull85cfolul3s9qo&client_secret=7t75m570gfns8n17ea7p99doh3ayjv&grant_type=client_credentials
+
+# to get the below keys
 
 {
-  "access_token": "jostpf5q0uzmxmkba9iyug38kjtgh",
-  "expires_in": 5011271,
+  "access_token": "6qesjsfcxxrl8ngairhbwkh7c6pb9b",
+  "expires_in": 5404103,
   "token_type": "bearer"
 }
 
@@ -172,6 +176,18 @@ def get_games_details(x):
 
 get_games_details('Ninja')
 
+
+# get gamers details with name
+def get_games_details_with_name(x):
+    url = "https://api.twitch.tv/helix/users?login="+str(x)
+    headers["Authorization"] = "Bearer 6qesjsfcxxrl8ngairhbwkh7c6pb9b"
+    headers["Client-Id"] = "5hw8leitbdrn45ull85cfolul3s9qo"
+    resp = requests.get(url, headers=headers)
+    return resp.json() #['data']
+
+get_games_details_with_name('RanbooLive')
+
+
 # get gamers followers
 def get_user_follows(user_id):
     url = "https://api.twitch.tv/helix/users/follows?to_id="+str(user_id)+"&first=100"
@@ -284,6 +300,71 @@ top_100_gamer_username = ['Ninja',
                          'EASPORTSFIFA',
                          'Anomaly',
                          'StableRonaldo']
+
+
+# create URL to extract the id's
+request_username_string = '&login='
+for i in top_100_gamer_username:
+    request_username_string = request_username_string + str(i) + '&login='
+
+URL_to_get_user_ids = "Ninja&login=auronplay&login=Rubius&login=ibai&login=xQc&login=Tfue&login=shroud&login=TheGrefg&login=juansguarnizo&login=pokimane&login=sodapoppin&login=Heelmike&login=Myth&login=tommyinnit&login=TimTheTatman&login=AdinRoss&login=NICKMERCS&login=Riot Games&login=SypherPK&login=Dream&login=summit1g&login=Amouranth&login=alanzoka&login=ElMariana&login=ElSpreen&login=ESL_CSGO&login=Clix&login=elded&login=Fortnite&login=Mongraal&login=AriGameplays&login=Quackity&login=Bugha&login=loltyler1&login=Tubbo&login=GeorgeNotFound&login=MontanaBlack88&login=Dakotaz&login=WilburSoot&login=moistcr1tikal&login=Robleis&login=DrLupo&login=Fresh&login=RanbooLive&login=NickEh30&login=DaequanWoco&login=Philza&login=SLAKUN10&login=Sykkuno&login=Squeezie&login=benjyfishy&login=Faker&login=RocketLeague&login=Gotaga&login=NOBRU&login=Gaules&login=Symfuhny&login=coscu&login=Castro_1021&login=Elraenn&login=loud_coringa&login=karljacobs&login=VALORANT&login=Fernanfloo&login=s1mple&login=Asmongold&login=buster&login=Alexby11&login=gabelulz&login=Trymacs&login=MissaSinfonia&login=IamCristinini&login=TenZ&login=ludwig&login=Syndicate&login=x2Twins&login=QuackityToo&login=Sapnap&login=casimito&login=elxokas&login=biyin_&login=LOLITOFDEZ&login=LIRIK&login=Aydan&login=Jelty&login=Loserfruit&login=cloakzy&login=jacksepticeye&login=aceu&login=wtcN&login=Carreraaa&login=MrSavage&login=Staryuuki&login=DisguisedToast&login=Nightblue3&login=KaiCenat&login=Nihachu&login=EASPORTSFIFA&login=Anomaly&login=StableRonaldo"
+
+
+
+get_user_ids = get_games_details_with_name("Ninja&login=auronplay")
+
+
+
+import time
+user_ids_and_names = []
+for i in top_100_gamer_username:
+    temp = []
+    temp2 = get_games_details_with_name(i)
+    try:
+        temp.append(temp2['data'][0]['id'])
+    except:
+        temp.append('')
+        pass
+    try:
+        temp.append(temp2['data'][0]['login'])
+    except:
+        temp.append('')
+        pass
+    try:
+        temp.append(temp2['data'][0]['display_name'])
+    except:
+        temp.append('')
+        pass
+    try:
+        temp.append(temp2['data'][0]['type'])
+    except:
+        temp.append('')
+        pass
+    try:
+        temp.append(temp2['data'][0]['broadcaster_type'])
+    except:
+        temp.append('')
+        pass
+    try:
+        temp.append(temp2['data'][0]['description'])
+    except:
+        temp.append('')
+        pass
+    try:
+        temp.append(temp2['data'][0]['view_count'])
+    except:
+        temp.append('')
+        pass
+    user_ids_and_names.append(temp)
+    time.sleep(3)
+
+
+# create pandas dataframe of streamers details
+streamers_details = pd.DataFrame(user_ids_and_names, columns = ['id','login','display_name','type','broadcaster_type','description','view_count'])
+
+
+
+
 
 
 
