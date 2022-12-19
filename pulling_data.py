@@ -378,7 +378,7 @@ temp = []
 for i in players_and_games:
     temp.append([i, players_and_games[i]])
 
-# creating dataframe for the stremers and the most played games
+# creating dataframe for the streamers and the most played games
 streamers_games = pd.DataFrame(temp, columns=['streamer','games'])
 
 # saving the data to dataframe

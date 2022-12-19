@@ -144,16 +144,10 @@ games_and_genre_dataframe = pd.DataFrame(games_and_genre, columns=["game","genre
 games_and_genre_dataframe.to_csv("data/games_and_genre.csv", index=False)
 
 
+for i in set_of_unique_games:
+    print(i)
 
-
-
-
-
-
-
-
-
-
+len(set_of_unique_games)
 
 
 
